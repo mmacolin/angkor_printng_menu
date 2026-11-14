@@ -6,7 +6,7 @@
   --color-brand-blue: #5792cc;
   --color-brand-blue-dark: #2f6aa6;
   --color-ink: #1f2937;
-  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans Khmer', 'Helvetica Neue', Arial, sans-serif;
+  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans Khmer', 'Khmer OS', 'Helvetica Neue', Arial, sans-serif;
 }
 
 html {
@@ -26,4 +26,14 @@ body {
 
 .focus-ring {
   @apply focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue;
+}
+
+/* Khmer script needs a little more line height to avoid clipped vowel signs. */
+:lang(km) {
+  font-family: 'Noto Sans Khmer', 'Khmer OS', system-ui, sans-serif;
+  line-height: 1.7;
+}
+:lang(km) .uppercase {
+  text-transform: none;
+  letter-spacing: 0;
 }

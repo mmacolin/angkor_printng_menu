@@ -37,7 +37,7 @@ export default function ProductsTab({ notify, notifyError }: Props) {
     return (products ?? []).filter(
       (p) =>
         (categoryFilter === 'all' || (categoryFilter === 'none' ? !p.category_id : p.category_id === categoryFilter)) &&
-        (!q || `${p.name} ${p.sku ?? ''} ${categoryName.get(p.category_id ?? '') ?? ''}`.toLowerCase().includes(q)),
+        (!q || `${p.name} ${p.name_km} ${p.sku ?? ''} ${categoryName.get(p.category_id ?? '') ?? ''}`.toLowerCase().includes(q)),
     );
   }, [products, query, categoryFilter, categoryName]);
 
@@ -141,7 +141,14 @@ export default function ProductsTab({ notify, notifyError }: Props) {
                         <div className="h-11 w-11 shrink-0 overflow-hidden rounded-lg">
                           <ProductImage src={p.images[0]} name={p.name} />
                         </div>
-                        <span className="font-semibold text-ink">{p.name}</span>
+                        <span className="min-w-0">
+                          <span className="block font-semibold text-ink">{p.name}</span>
+                          {p.name_km ? (
+                            <span lang="km" className="block text-xs text-slate-500">{p.name_km}</span>
+                          ) : (
+                            <span className="block text-xs text-amber-700">Khmer not added yet</span>
+                          )}
+                        </span>
                       </div>
                     </td>
                     <td className="px-4 py-2.5">{categoryName.get(p.category_id ?? '') ?? '—'}</td>
@@ -178,6 +185,7 @@ export default function ProductsTab({ notify, notifyError }: Props) {
                   </div>
                   <div className="min-w-0 flex-1">
                     <p className="truncate font-semibold text-ink">{p.name}</p>
+                    {p.name_km ? <p lang="km" className="truncate text-xs text-slate-500">{p.name_km}</p> : <p className="text-xs text-amber-700">Khmer not added yet</p>}
                     <p className="truncate text-xs text-slate-500">
                       {categoryName.get(p.category_id ?? '') ?? 'No category'}
                       {p.sku && ` · ${p.sku}`}
@@ -206,7 +214,7 @@ export default function ProductsTab({ notify, notifyError }: Props) {
 
           <p className="mt-4 text-xs text-slate-500">
             <strong>Available</strong> off shows “Currently unavailable” on the product. <strong>Visible</strong> off hides the product from the catalogue
-            entirely.
+            entirely. Fill in the <strong>ខ្មែរ Khmer</strong> tab when editing a product; empty Khmer fields show the English text.
           </p>
         </>
       )}

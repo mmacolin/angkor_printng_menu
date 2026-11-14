@@ -4,6 +4,8 @@
 -- It is safe to re-run (uses IF NOT EXISTS / CREATE OR REPLACE / DROP POLICY IF EXISTS).
 --
 -- No prices are stored anywhere in this schema by design.
+-- Text fields have an optional Khmer version (*_km); the website falls back
+-- to English when the Khmer field is empty.
 -- =====================================================================
 
 create extension if not exists pgcrypto;
@@ -34,6 +36,7 @@ $$;
 create table if not exists public.categories (
   id         uuid primary key default gen_random_uuid(),
   name       text not null unique,
+  name_km    text not null default '',
   sort_order integer not null default 0,
   created_at timestamptz not null default now()
 );
@@ -47,19 +50,26 @@ create table if not exists public.products (
   slug              text not null unique,
   sku               text unique,
   name              text not null,
+  name_km           text not null default '',
   category_id       uuid references public.categories (id) on delete set null,
   description       text not null default '',
+  description_km    text not null default '',
   specifications    jsonb not null default '[]'::jsonb,
+  specifications_km jsonb not null default '[]'::jsonb,
   materials         text[] not null default '{}',
+  materials_km      text[] not null default '{}',
   sizes             text[] not null default '{}',
+  sizes_km          text[] not null default '{}',
   finishing_options text[] not null default '{}',
+  finishing_options_km text[] not null default '{}',
   images            text[] not null default '{}',
   in_stock          boolean not null default true,
   is_published      boolean not null default true,
   sort_order        integer not null default 0,
   created_at        timestamptz not null default now(),
   updated_at        timestamptz not null default now(),
-  constraint specifications_is_array check (jsonb_typeof(specifications) = 'array')
+  constraint specifications_is_array check (jsonb_typeof(specifications) = 'array'),
+  constraint specifications_km_is_array check (jsonb_typeof(specifications_km) = 'array')
 );
 
 create index if not exists products_category_idx on public.products (category_id);
@@ -77,14 +87,17 @@ create trigger products_touch before update on public.products
   for each row execute function public.touch_updated_at();
 
 -- ---------------------------------------------------------------------
--- Branding (always shown) and contact details (hideable) live in
--- separate single-row tables, so a page with contacts hidden never
--- even downloads them.
+-- Branding and contact details. Shown to wholesalers on the normal site.
+-- Customer pages (opened from a wholesaler's shared link) never request
+-- these tables, so Angkor Printing's name, logo and contacts are not sent
+-- to the customer's browser at all.
 -- ---------------------------------------------------------------------
 create table if not exists public.brand_settings (
   id         integer primary key default 1 check (id = 1),
   brand_name text not null default 'Angkor Printing',
+  brand_name_km text not null default '',
   tagline    text not null default 'Product Catalogue',
+  tagline_km text not null default '',
   logo_url   text,
   updated_at timestamptz not null default now()
 );
@@ -96,10 +109,23 @@ create table if not exists public.contact_settings (
   telegram   text not null default '',
   email      text not null default '',
   address    text not null default '',
+  address_km text not null default '',
   facebook   text not null default '',
   website    text not null default '',
   updated_at timestamptz not null default now()
 );
+
+-- Upgrade path: adds the Khmer columns if the tables were created by an earlier version.
+alter table public.categories       add column if not exists name_km text not null default '';
+alter table public.products         add column if not exists name_km text not null default '';
+alter table public.products         add column if not exists description_km text not null default '';
+alter table public.products         add column if not exists specifications_km jsonb not null default '[]'::jsonb;
+alter table public.products         add column if not exists materials_km text[] not null default '{}';
+alter table public.products         add column if not exists sizes_km text[] not null default '{}';
+alter table public.products         add column if not exists finishing_options_km text[] not null default '{}';
+alter table public.brand_settings   add column if not exists brand_name_km text not null default '';
+alter table public.brand_settings   add column if not exists tagline_km text not null default '';
+alter table public.contact_settings add column if not exists address_km text not null default '';
 
 insert into public.brand_settings (id) values (1) on conflict (id) do nothing;
 insert into public.contact_settings (id) values (1) on conflict (id) do nothing;

@@ -8,6 +8,7 @@
  *   add --dry-run to check the CSV without writing anything
  *
  * Re-running is safe: products are matched by SKU (or name if no SKU) and updated.
+ * Khmer columns (name_km, description_km, …) are optional; empty ones show English.
  * Needs VITE_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in .env (service key stays on your computer).
  */
 import 'dotenv/config';
@@ -113,7 +114,7 @@ let contactsIn = null;
 if (usePlaceholder) {
   const data = JSON.parse(fs.readFileSync(path.join(__dirname, '../src/data/placeholder.json'), 'utf8'));
   categoriesIn = data.categories;
-  productsIn = data.products.map((p) => ({ ...p, image_files: [] }));
+  productsIn = data.products.map((p) => ({ ...p, category_km: data.categories.find((c) => c.name === p.category)?.name_km ?? '', image_files: [] }));
   contactsIn = data.contacts;
 } else {
   const { headers, records } = parseCsv(fs.readFileSync(path.resolve(csvPath), 'utf8'));
@@ -127,17 +128,28 @@ if (usePlaceholder) {
     row: i + 2,
     sku: r.sku || null,
     name: r.name,
+    name_km: r.name_km ?? '',
     category: r.category,
+    category_km: r.category_km ?? '',
     description: r.description ?? '',
+    description_km: r.description_km ?? '',
     specifications: specs(r.specifications),
+    specifications_km: specs(r.specifications_km),
     materials: list(r.materials),
+    materials_km: list(r.materials_km),
     sizes: list(r.sizes),
+    sizes_km: list(r.sizes_km),
     finishing_options: list(r.finishing_options ?? r.finishing),
+    finishing_options_km: list(r.finishing_options_km),
     image_files: list(r.image_files ?? r.image_file ?? r.images),
     in_stock: bool(r.in_stock),
   }));
   const names = [...new Set(productsIn.map((p) => p.category).filter(Boolean))];
-  categoriesIn = names.map((name, i) => ({ name, sort_order: i + 1 }));
+  categoriesIn = names.map((name, i) => ({
+    name,
+    name_km: productsIn.find((p) => p.category === name && p.category_km)?.category_km ?? '',
+    sort_order: i + 1,
+  }));
 }
 
 // ---------------------------------------------------------------- validate
@@ -177,9 +189,14 @@ if (!url || !serviceKey) {
 const db = createClient(url, serviceKey, { auth: { persistSession: false } });
 
 async function ensureCategories() {
-  const { data: existing, error } = await db.from('categories').select('id,name');
+  const { data: existing, error } = await db.from('categories').select('id,name,name_km');
   if (error) throw error;
   const byName = new Map(existing.map((c) => [c.name.toLowerCase(), c.id]));
+  // Fill in a missing Khmer name on existing categories.
+  for (const c of categoriesIn) {
+    const found = existing.find((e) => e.name.toLowerCase() === c.name.toLowerCase());
+    if (found && c.name_km && !found.name_km) await db.from('categories').update({ name_km: c.name_km }).eq('id', found.id);
+  }
   const toInsert = categoriesIn.filter((c) => !byName.has(c.name.toLowerCase()));
   if (toInsert.length) {
     const { data, error: insErr } = await db.from('categories').insert(toInsert).select('id,name');
@@ -216,13 +233,19 @@ for (const [i, p] of productsIn.entries()) {
     const record = {
       sku: p.sku,
       name: p.name,
+      name_km: p.name_km ?? '',
       slug: slugify(p.sku ? `${p.name}-${p.sku}` : p.name),
       category_id: categoryIds.get(String(p.category).toLowerCase()) ?? null,
       description: p.description,
+      description_km: p.description_km ?? '',
       specifications: p.specifications,
+      specifications_km: p.specifications_km ?? [],
       materials: p.materials,
+      materials_km: p.materials_km ?? [],
       sizes: p.sizes,
+      sizes_km: p.sizes_km ?? [],
       finishing_options: p.finishing_options,
+      finishing_options_km: p.finishing_options_km ?? [],
       in_stock: p.in_stock,
       sort_order: i,
     };
