@@ -1,0 +1,202 @@
+{
+  "_note": "PLACEHOLDER DATA. Shown when Supabase is not connected, and used by `npm run seed -- --placeholder`. Replace with your real products via the admin dashboard or `npm run seed -- --csv products.csv`.",
+  "categories": [
+    { "name": "Business Cards", "sort_order": 1 },
+    { "name": "Flyers & Brochures", "sort_order": 2 },
+    { "name": "Banners & Signage", "sort_order": 3 },
+    { "name": "Stickers & Labels", "sort_order": 4 },
+    { "name": "Packaging", "sort_order": 5 },
+    { "name": "Apparel", "sort_order": 6 },
+    { "name": "Stationery", "sort_order": 7 }
+  ],
+  "products": [
+    {
+      "sku": "BC-STD",
+      "name": "Standard Business Cards",
+      "category": "Business Cards",
+      "description": "Crisp full-colour business cards for everyday networking. Single or double sided.",
+      "specifications": [
+        { "label": "Print", "value": "Full colour (CMYK), 1 or 2 sides" },
+        { "label": "Paper weight", "value": "350 gsm" },
+        { "label": "Minimum quantity", "value": "100 cards" },
+        { "label": "Turnaround", "value": "2–3 working days" }
+      ],
+      "materials": ["Art card 350gsm", "Matte card 350gsm"],
+      "sizes": ["90 × 54 mm", "85 × 55 mm"],
+      "finishing_options": ["Matte lamination", "Gloss lamination", "Rounded corners"],
+      "in_stock": true
+    },
+    {
+      "sku": "BC-PRM",
+      "name": "Premium Spot UV Business Cards",
+      "category": "Business Cards",
+      "description": "Thick soft-touch cards with raised spot UV to make your logo stand out.",
+      "specifications": [
+        { "label": "Print", "value": "Full colour, 2 sides" },
+        { "label": "Paper weight", "value": "450 gsm" },
+        { "label": "Minimum quantity", "value": "200 cards" },
+        { "label": "Turnaround", "value": "4–5 working days" }
+      ],
+      "materials": ["Soft-touch card 450gsm"],
+      "sizes": ["90 × 54 mm"],
+      "finishing_options": ["Spot UV", "Gold foil", "Silver foil", "Embossing"],
+      "in_stock": true
+    },
+    {
+      "sku": "FL-A5",
+      "name": "Flyers",
+      "category": "Flyers & Brochures",
+      "description": "Promotional flyers for events, menus and announcements.",
+      "specifications": [
+        { "label": "Print", "value": "Full colour, 1 or 2 sides" },
+        { "label": "Minimum quantity", "value": "500 sheets" },
+        { "label": "Turnaround", "value": "2–3 working days" }
+      ],
+      "materials": ["Art paper 128gsm", "Art paper 157gsm", "Art card 260gsm"],
+      "sizes": ["A6", "A5", "A4"],
+      "finishing_options": ["None", "Gloss lamination", "Matte lamination"],
+      "in_stock": true
+    },
+    {
+      "sku": "BR-TRI",
+      "name": "Tri-fold Brochures",
+      "category": "Flyers & Brochures",
+      "description": "Folded brochures for product and service information, delivered pre-folded.",
+      "specifications": [
+        { "label": "Print", "value": "Full colour, 2 sides" },
+        { "label": "Fold", "value": "Tri-fold (letter fold) or Z-fold" },
+        { "label": "Minimum quantity", "value": "300 pieces" }
+      ],
+      "materials": ["Art paper 157gsm", "Matte paper 170gsm"],
+      "sizes": ["A4 (folds to DL)"],
+      "finishing_options": ["Creasing & folding", "Matte lamination"],
+      "in_stock": true
+    },
+    {
+      "sku": "BN-VIN",
+      "name": "Vinyl Banner",
+      "category": "Banners & Signage",
+      "description": "Durable outdoor banner for shopfronts, events and promotions.",
+      "specifications": [
+        { "label": "Print", "value": "Eco-solvent, full colour" },
+        { "label": "Use", "value": "Indoor & outdoor" },
+        { "label": "Turnaround", "value": "1–2 working days" }
+      ],
+      "materials": ["Frontlit PVC 440gsm", "Mesh PVC"],
+      "sizes": ["1 × 2 m", "1.5 × 3 m", "Custom size"],
+      "finishing_options": ["Hemmed edges", "Eyelets every 50 cm", "Pole pockets"],
+      "in_stock": true
+    },
+    {
+      "sku": "BN-RUP",
+      "name": "Roll-up Banner Stand",
+      "category": "Banners & Signage",
+      "description": "Portable retractable banner with carry bag. Sets up in under a minute.",
+      "specifications": [
+        { "label": "Print", "value": "Full colour" },
+        { "label": "Includes", "value": "Aluminium stand + carry bag" }
+      ],
+      "materials": ["PET film", "PVC banner"],
+      "sizes": ["80 × 200 cm", "85 × 200 cm", "100 × 200 cm"],
+      "finishing_options": ["Matte lamination"],
+      "in_stock": false
+    },
+    {
+      "sku": "ST-DIE",
+      "name": "Die-cut Stickers",
+      "category": "Stickers & Labels",
+      "description": "Custom-shaped stickers cut to the outline of your design.",
+      "specifications": [
+        { "label": "Print", "value": "Full colour" },
+        { "label": "Adhesive", "value": "Permanent" },
+        { "label": "Minimum quantity", "value": "100 pieces" }
+      ],
+      "materials": ["White vinyl", "Clear vinyl", "Paper sticker"],
+      "sizes": ["3 × 3 cm", "5 × 5 cm", "7 × 7 cm", "Custom size"],
+      "finishing_options": ["Gloss lamination", "Matte lamination", "Kiss cut", "Die cut"],
+      "in_stock": true
+    },
+    {
+      "sku": "ST-ROLL",
+      "name": "Product Labels on Roll",
+      "category": "Stickers & Labels",
+      "description": "Roll labels for bottles, jars and packaging, ready for hand or machine application.",
+      "specifications": [
+        { "label": "Print", "value": "Full colour" },
+        { "label": "Core size", "value": "76 mm" },
+        { "label": "Minimum quantity", "value": "500 labels" }
+      ],
+      "materials": ["Semi-gloss paper", "White BOPP", "Clear BOPP"],
+      "sizes": ["Round 40 mm", "Rectangle 50 × 80 mm", "Custom size"],
+      "finishing_options": ["Varnish", "Gloss lamination"],
+      "in_stock": true
+    },
+    {
+      "sku": "PK-BOX",
+      "name": "Custom Printed Boxes",
+      "category": "Packaging",
+      "description": "Folding boxes for cosmetics, food and retail products, printed to your design.",
+      "specifications": [
+        { "label": "Print", "value": "Full colour, outside" },
+        { "label": "Minimum quantity", "value": "500 boxes" },
+        { "label": "Turnaround", "value": "7–10 working days" }
+      ],
+      "materials": ["Ivory board 300gsm", "Kraft board 350gsm", "Corrugated E-flute"],
+      "sizes": ["Custom size"],
+      "finishing_options": ["Matte lamination", "Spot UV", "Hot foil", "Window patch"],
+      "in_stock": true
+    },
+    {
+      "sku": "PK-BAG",
+      "name": "Paper Shopping Bags",
+      "category": "Packaging",
+      "description": "Branded paper bags with rope or twisted paper handles.",
+      "specifications": [
+        { "label": "Print", "value": "1–4 colours" },
+        { "label": "Minimum quantity", "value": "300 bags" }
+      ],
+      "materials": ["Kraft paper 120gsm", "Art paper 210gsm"],
+      "sizes": ["S 18 × 8 × 22 cm", "M 25 × 10 × 32 cm", "L 32 × 12 × 40 cm"],
+      "finishing_options": ["Rope handle", "Twisted paper handle", "Matte lamination"],
+      "in_stock": true
+    },
+    {
+      "sku": "AP-TEE",
+      "name": "Printed T-Shirts",
+      "category": "Apparel",
+      "description": "Cotton T-shirts for uniforms, events and merchandise.",
+      "specifications": [
+        { "label": "Print method", "value": "Screen print or DTF" },
+        { "label": "Fabric", "value": "100% cotton, 180gsm" },
+        { "label": "Minimum quantity", "value": "20 pieces" }
+      ],
+      "materials": ["100% cotton", "Cotton-poly blend"],
+      "sizes": ["S", "M", "L", "XL", "XXL"],
+      "finishing_options": ["Front print", "Back print", "Sleeve print"],
+      "in_stock": true
+    },
+    {
+      "sku": "SN-LTR",
+      "name": "Letterheads & Envelopes",
+      "category": "Stationery",
+      "description": "Matching company letterheads and envelopes for a professional look.",
+      "specifications": [
+        { "label": "Print", "value": "Full colour, 1 side" },
+        { "label": "Minimum quantity", "value": "500 pieces" }
+      ],
+      "materials": ["Woodfree paper 100gsm", "Woodfree paper 120gsm"],
+      "sizes": ["A4 letterhead", "DL envelope", "C4 envelope"],
+      "finishing_options": ["None"],
+      "in_stock": true
+    }
+  ],
+  "contacts": {
+    "phone": "+855 12 345 678 (placeholder)",
+    "whatsapp": "85512345678",
+    "telegram": "angkorprinting_placeholder",
+    "email": "hello@example.com",
+    "address": "Placeholder address, Phnom Penh, Cambodia",
+    "facebook": "",
+    "website": ""
+  }
+}
