@@ -42,9 +42,21 @@ function initialCustomerView(): boolean {
   return customer;
 }
 
+/**
+ * The one public address of the catalogue. Share links always use it, even when
+ * the page is opened from a Vercel preview URL. Override with VITE_SITE_URL.
+ * (On localhost, links use the local address so the site can be tested.)
+ */
+export const SITE_URL = ((import.meta.env.VITE_SITE_URL as string | undefined) || 'https://angkorprintngmenu.vercel.app').replace(/\/+$/, '');
+
+function shareOrigin(): string {
+  const { hostname, origin } = window.location;
+  return hostname === 'localhost' || hostname === '127.0.0.1' ? origin : SITE_URL;
+}
+
 /** The link a wholesaler sends to a customer. */
 export function buildShareUrl(path: string, lang: Lang): string {
-  const url = new URL(path, window.location.origin);
+  const url = new URL(path, shareOrigin());
   url.searchParams.set(CUSTOMER_PARAM, '1');
   if (lang === 'km') url.searchParams.set(LANG_PARAM, 'km');
   return url.toString();

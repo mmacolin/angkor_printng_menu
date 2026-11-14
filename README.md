@@ -176,9 +176,18 @@ There is no price column, on purpose.
 4. Under **Environment Variables**, add **only**:
    - `VITE_SUPABASE_URL`
    - `VITE_SUPABASE_ANON_KEY`
-5. Click **Deploy**. Your catalogue is live at `https://<project>.vercel.app`, admin at `/admin`.
+5. Click **Deploy**. Your catalogue is live at <https://angkorprintngmenu.vercel.app>, admin at `/admin`. (The Vercel project must be named `angkorprintngmenu` so it gets this address.)
 
 `vercel.json` makes product links like `/p/flyers` work on refresh, marks `/admin` as not-for-search-engines and caches built assets.
+
+### One public address: `https://angkorprintngmenu.vercel.app`
+
+- **Share links** always use `https://angkorprintngmenu.vercel.app`, even if a wholesaler opened the site from another address. (Change it with `VITE_SITE_URL`.)
+- **Every other address** of the Vercel project — preview deployments such as `angkorprintngmenu-git-….vercel.app` and any other alias — **redirects** to `https://angkorprintngmenu.vercel.app` (rule at the top of `vercel.json`).
+- Because previews redirect, check changes locally (`npm run dev`) or after merging. To allow previews again, delete the `redirects` block in `vercel.json`.
+- If you later add a custom domain, put it in both places: `VITE_SITE_URL` in Vercel's environment variables, and the two `angkorprintngmenu.vercel.app` values in `vercel.json`.
+
+> ⚠️ **The address contains “angkor”.** Customers see the link they open, so `angkorprintngmenu.vercel.app` reveals the Angkor name even though the page hides it. For fully unbranded customer links, use a neutral address (e.g. a free `*.vercel.app` name like `print-catalogue-kh.vercel.app`, or your own neutral domain) and set it as above.
 
 To use your own domain: Vercel project → **Settings → Domains**.
 
