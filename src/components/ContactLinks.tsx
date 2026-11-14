@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { Globe, Mail, MapPin, MessageCircle, Phone, Send, ThumbsUp } from 'lucide-react';
-import { useSite } from '../lib/site';
+import { brandName, useSite } from '../lib/site';
+import { useLang, type Lang, type Strings } from '../lib/i18n';
 import type { Contacts } from '../lib/types';
 
 interface Item {
@@ -14,22 +15,23 @@ interface Item {
 const digits = (s: string) => s.replace(/[^\d]/g, '');
 const withProtocol = (s: string) => (/^https?:\/\//i.test(s) ? s : `https://${s}`);
 
-function buildItems(c: Contacts): Item[] {
+function buildItems(c: Contacts, lang: Lang, t: Strings): Item[] {
   const items: Item[] = [];
   if (c.whatsapp) items.push({ key: 'whatsapp', label: 'WhatsApp', value: c.whatsapp, href: `https://wa.me/${digits(c.whatsapp)}`, icon: <MessageCircle size={18} /> });
   if (c.telegram) {
     const handle = c.telegram.replace(/^@/, '').replace(/^https?:\/\/t\.me\//i, '');
     items.push({ key: 'telegram', label: 'Telegram', value: `@${handle}`, href: `https://t.me/${handle}`, icon: <Send size={18} /> });
   }
-  if (c.phone) items.push({ key: 'phone', label: 'Call', value: c.phone, href: `tel:${c.phone.replace(/[^\d+]/g, '')}`, icon: <Phone size={18} /> });
-  if (c.email) items.push({ key: 'email', label: 'Email', value: c.email, href: `mailto:${c.email}`, icon: <Mail size={18} /> });
+  if (c.phone) items.push({ key: 'phone', label: t.call, value: c.phone, href: `tel:${c.phone.replace(/[^\d+]/g, '')}`, icon: <Phone size={18} /> });
+  if (c.email) items.push({ key: 'email', label: t.email, value: c.email, href: `mailto:${c.email}`, icon: <Mail size={18} /> });
   if (c.facebook) items.push({ key: 'facebook', label: 'Facebook', value: c.facebook.replace(/^https?:\/\/(www\.)?/i, ''), href: withProtocol(c.facebook), icon: <ThumbsUp size={18} /> });
   if (c.website) items.push({ key: 'website', label: 'Website', value: c.website.replace(/^https?:\/\//i, ''), href: withProtocol(c.website), icon: <Globe size={18} /> });
-  if (c.address)
+  const address = (lang === 'km' && c.address_km) || c.address;
+  if (address)
     items.push({
       key: 'address',
-      label: 'Address',
-      value: c.address,
+      label: t.address,
+      value: address,
       href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(c.address)}`,
       icon: <MapPin size={18} />,
     });
@@ -37,20 +39,21 @@ function buildItems(c: Contacts): Item[] {
 }
 
 /**
- * Angkor Printing's direct contact details.
- * Renders nothing on pages opened from a "Hide Angkor Printing Contact" link.
+ * Angkor Printing's direct contact details. Wholesaler view only —
+ * renders nothing in the customer view (contacts are never loaded there).
  */
 export default function ContactLinks({ variant }: { variant: 'footer' | 'product' }) {
-  const { contacts, contactsHidden, brand } = useSite();
-  if (contactsHidden || !contacts) return null;
+  const { contacts, brand } = useSite();
+  const { lang, t } = useLang();
+  if (!contacts || !brand) return null;
 
-  const items = buildItems(contacts);
+  const items = buildItems(contacts, lang, t);
   if (!items.length) return null;
 
   if (variant === 'product') {
     return (
       <section className="rounded-2xl border border-slate-200 bg-white p-4">
-        <h2 className="text-sm font-bold uppercase tracking-wide text-slate-500">Contact {brand.brand_name}</h2>
+        <h2 className="text-sm font-bold uppercase tracking-wide text-slate-500">{t.contactUs(brandName(brand, lang))}</h2>
         <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3">
           {items
             .filter((i) => i.key !== 'address')

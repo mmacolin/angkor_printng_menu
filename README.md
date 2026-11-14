@@ -1,40 +1,51 @@
 # Angkor Printing — Wholesale Product Catalogue
 
-A mobile-friendly product catalogue for Angkor Printing's wholesalers.
+A simple, mobile-friendly product catalogue in English and Khmer.
 
-**How it is used**
+```
+Angkor Printing (admin)  →  Wholesaler  →  Customer
+ manages products          sees everything    sees the same products,
+ in /admin                 + shares links     without Angkor Printing's
+                                              name, logo or contacts
+```
 
-1. Angkor Printing's team adds products in the admin dashboard (`/admin`).
-2. Wholesalers browse the catalogue and share product or catalogue links with their own customers.
-3. Customers view products (no account needed) and buy **from the wholesaler**.
-4. The wholesaler orders from Angkor Printing through the usual offline channels.
+1. **Angkor Printing** manages products, photos, categories and descriptions (English + Khmer) in the private dashboard at `/admin`.
+2. **Wholesalers** open the normal website. They see the full catalogue with Angkor Printing's name, logo and contact details, and can copy and share product (or catalogue) links.
+3. **Customers** open the wholesaler's link. They see the same product information, but Angkor Printing's name, logo and contact details are automatically hidden. Customers buy from the wholesaler; the wholesaler orders from Angkor Printing separately.
 
-**What it deliberately does not have:** prices of any kind, shopping cart, checkout, payment, order forms or quotation requests.
+There is **one product database**. Wholesalers and customers see the same products — only what is *shown* differs.
+
+**Not included, on purpose:** prices of any kind, shopping cart, checkout, payment, order forms or quotation requests.
 
 ---
 
-## Features
+## What each person sees
 
-| Area | What it does |
-|---|---|
-| **Catalogue** (`/`) | Product grid with search and category filter. Fast on mobile. |
-| **Product page** (`/p/<name>`) | Photos, description, specifications, materials, sizes, finishing options, category. Each product has its own shareable link. |
-| **Branding** | Angkor Printing logo and name are shown on every page, including shared links. They cannot be switched off (blank values fall back to the defaults). |
-| **Sharing** | “Share catalogue” and “Share this product” buttons. Copy link, phone share sheet, WhatsApp, Telegram. |
-| **Hide Angkor Printing Contact** | A toggle in the share window. When on, the shared page hides phone, WhatsApp, Telegram, email, address, Facebook, website and all contact buttons — branding stays. |
-| **Admin** (`/admin`) | Password login. Add / edit / delete products, drag-and-drop photos, specifications, categories, branding (logo, name, tagline) and contact details. |
+| | Wholesaler (normal link) | Customer (shared link) |
+|---|---|---|
+| Products, photos, descriptions, specifications, materials, sizes, finishing options, categories | ✅ | ✅ same |
+| English / ខ្មែរ switch | ✅ | ✅ |
+| Angkor Printing name and logo | ✅ | ❌ hidden |
+| Phone, WhatsApp, Telegram, email, address, Facebook, website | ✅ | ❌ hidden |
+| Share buttons | ✅ | ❌ |
+| Prices / ordering | ❌ | ❌ |
 
-### How “Hide Angkor Printing Contact” works
+### How shared links work
 
-- Links made with the toggle on end in `?hc=1`, e.g. `https://your-site.vercel.app/p/flyers?hc=1`.
-- On such a page, contact details are **never downloaded** from the database — they are not in the page, its metadata, structured data or network traffic. They are stored in a separate table (`contact_settings`) from the branding (`brand_settings`) for exactly this reason.
-- The setting **sticks for the rest of the browser-tab session**: moving between pages keeps contacts hidden, `?hc=1` is kept in the address bar, and deleting it from the URL does not bring contacts back.
-- Anyone sharing *from* a hidden page can only create hidden links (the toggle is locked on).
-- `index.html` (the page shell used for every URL and for link previews) contains no contact details.
+- Every link made with a **Share** button opens the customer view. It ends in `?s=1` (plus `&lang=km` if the wholesaler was viewing in Khmer), e.g. `https://your-site.vercel.app/p/flyers?s=1`.
+- In the customer view the branding and contact details are **never downloaded** — they are not in the page, the browser-tab title, the tab icon, the page metadata or the network traffic. The site's public code and `index.html` (which WhatsApp/Telegram read for link previews) contain no company name either.
+- The customer view **sticks for the rest of the browser-tab session**: moving between pages keeps it, `?s=1` stays in the address bar (so a link the customer copies is also a customer link), and deleting `?s=1` by hand does not bring the branding back.
 
-> Tip for wholesalers: if you open one of your own hidden links in a tab, that tab stays in hidden mode. Open the catalogue in a new tab to see contacts again.
+> **Tip for wholesalers:** if you open one of your own shared links, that browser tab stays in customer view. Open the website in a new tab to see the normal view again.
 
-**Limits to be aware of:** this hides Angkor Printing's details from the customer's view; it is not a secret. Contact details are public on the normal catalogue, so a customer who already knows the normal address can still find them. Also, don't type phone numbers or addresses into product descriptions — those are shown on every page.
+**Be aware:** this hides Angkor Printing from what the customer sees; it is not a secret. Anyone who visits the normal website address sees the full details. Also keep the company name, phone numbers and addresses **out of product descriptions and photos** — product content is shown to customers as-is.
+
+### English and Khmer
+
+- The **EN | ខ្មែរ** switch is in the header. The choice is remembered on that device.
+- In the admin, each product has an **English** tab and a **ខ្មែរ Khmer** tab. Any Khmer field left empty shows the English text, so you can translate gradually.
+- Categories, brand name, tagline and address also have Khmer versions.
+- Search finds products in either language.
 
 ---
 
@@ -98,7 +109,7 @@ npm run dev
 
 Open the address it prints (usually <http://localhost:5173>). Admin is at `/admin`.
 
-Without a `.env` file the site runs in **demo mode** with 12 placeholder products, and admin shows a “not connected” notice.
+Without a `.env` file the site runs in **demo mode** with 12 placeholder products (Khmer text is a draft translation), and admin shows a “not connected” notice. Add `?s=1` to any address to see the customer view, e.g. <http://localhost:5173/?s=1>.
 
 ---
 
@@ -106,7 +117,7 @@ Without a `.env` file the site runs in **demo mode** with 12 placeholder product
 
 ### Option A — admin dashboard
 
-Go to `/admin`, sign in, click **Add product**. Drag photos in, fill in the details and save. The first photo is the cover.
+Go to `/admin`, sign in, click **Add product**. Drag photos in, fill in the **English** tab, then the **ខ្មែរ Khmer** tab, and save. The first photo is the cover.
 
 - **Available** off → shows “Currently unavailable”.
 - **Visible** off → hidden from the catalogue (good for seasonal items).
@@ -151,6 +162,8 @@ Separate multiple values with `|`. Wrap a cell in double quotes if it contains a
 | `image_files` | No | `BC-STD.jpg\|BC-STD-back.jpg` (files in `images/`) |
 | `in_stock` | No | `TRUE` / `FALSE` (default TRUE) |
 
+**Khmer columns (all optional):** `name_km`, `category_km`, `description_km`, `specifications_km`, `materials_km`, `sizes_km`, `finishing_options_km` — same format as the English column. Empty ones show the English text.
+
 There is no price column, on purpose.
 
 ---
@@ -179,10 +192,12 @@ After changing environment variables, redeploy (Deployments → ⋯ → Redeploy
 supabase/schema.sql        Tables, storage bucket, row-level security
 scripts/seed.mjs           CSV / placeholder import
 products_template.csv      CSV template
-public/logo.png            Default Angkor Printing logo
+public/logo.png            Default Angkor Printing logo (wholesaler view only)
+public/catalogue-icon.svg  Neutral browser-tab icon
 src/
   lib/api.ts               All database calls (falls back to placeholder data in demo mode)
-  lib/site.tsx             Branding, contacts and the hide-contact logic
+  lib/site.tsx             Wholesaler vs customer view (branding/contacts visibility)
+  lib/i18n.tsx             English/Khmer text and language switcher
   components/              Header, Footer, ShareDialog, ContactLinks, ProductCard…
   pages/                   Catalogue and product pages
   admin/                   Admin dashboard (loaded only on /admin)

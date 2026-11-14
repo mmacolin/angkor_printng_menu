@@ -1,13 +1,41 @@
 {
-  "_note": "PLACEHOLDER DATA. Shown when Supabase is not connected, and used by `npm run seed -- --placeholder`. Replace with your real products via the admin dashboard or `npm run seed -- --csv products.csv`.",
+  "_note": "PLACEHOLDER DATA (Khmer text is a draft translation — please review). Shown when Supabase is not connected, and used by `npm run seed -- --placeholder`. Replace with your real products via the admin dashboard or `npm run seed -- --csv products.csv`.",
   "categories": [
-    { "name": "Business Cards", "sort_order": 1 },
-    { "name": "Flyers & Brochures", "sort_order": 2 },
-    { "name": "Banners & Signage", "sort_order": 3 },
-    { "name": "Stickers & Labels", "sort_order": 4 },
-    { "name": "Packaging", "sort_order": 5 },
-    { "name": "Apparel", "sort_order": 6 },
-    { "name": "Stationery", "sort_order": 7 }
+    {
+      "name": "Business Cards",
+      "sort_order": 1,
+      "name_km": "នាមប័ណ្ណ"
+    },
+    {
+      "name": "Flyers & Brochures",
+      "sort_order": 2,
+      "name_km": "ខិត្តប័ណ្ណ និងកូនសៀវភៅណែនាំ"
+    },
+    {
+      "name": "Banners & Signage",
+      "sort_order": 3,
+      "name_km": "បដា និងផ្លាកសញ្ញា"
+    },
+    {
+      "name": "Stickers & Labels",
+      "sort_order": 4,
+      "name_km": "ស្ទីគ័រ និងស្លាក"
+    },
+    {
+      "name": "Packaging",
+      "sort_order": 5,
+      "name_km": "វេចខ្ចប់"
+    },
+    {
+      "name": "Apparel",
+      "sort_order": 6,
+      "name_km": "សម្លៀកបំពាក់"
+    },
+    {
+      "name": "Stationery",
+      "sort_order": 7,
+      "name_km": "សម្ភារៈការិយាល័យ"
+    }
   ],
   "products": [
     {
@@ -16,15 +44,57 @@
       "category": "Business Cards",
       "description": "Crisp full-colour business cards for everyday networking. Single or double sided.",
       "specifications": [
-        { "label": "Print", "value": "Full colour (CMYK), 1 or 2 sides" },
-        { "label": "Paper weight", "value": "350 gsm" },
-        { "label": "Minimum quantity", "value": "100 cards" },
-        { "label": "Turnaround", "value": "2–3 working days" }
+        {
+          "label": "Print",
+          "value": "Full colour (CMYK), 1 or 2 sides"
+        },
+        {
+          "label": "Paper weight",
+          "value": "350 gsm"
+        },
+        {
+          "label": "Minimum quantity",
+          "value": "100 cards"
+        },
+        {
+          "label": "Turnaround",
+          "value": "2–3 working days"
+        }
       ],
-      "materials": ["Art card 350gsm", "Matte card 350gsm"],
-      "sizes": ["90 × 54 mm", "85 × 55 mm"],
-      "finishing_options": ["Matte lamination", "Gloss lamination", "Rounded corners"],
-      "in_stock": true
+      "materials": [
+        "Art card 350gsm",
+        "Matte card 350gsm"
+      ],
+      "sizes": [
+        "90 × 54 mm",
+        "85 × 55 mm"
+      ],
+      "finishing_options": [
+        "Matte lamination",
+        "Gloss lamination",
+        "Rounded corners"
+      ],
+      "in_stock": true,
+      "name_km": "នាមប័ណ្ណស្តង់ដារ",
+      "description_km": "នាមប័ណ្ណពណ៌ពេញ ច្បាស់ល្អ សម្រាប់ប្រើប្រាស់ប្រចាំថ្ងៃ។ បោះពុម្ពមួយផ្ទៃ ឬពីរផ្ទៃ។",
+      "specifications_km": [
+        {
+          "label": "ការបោះពុម្ព",
+          "value": "ពណ៌ពេញ (CMYK) ១ ឬ ២ ផ្ទៃ"
+        },
+        {
+          "label": "កម្រាស់ក្រដាស",
+          "value": "350 gsm"
+        },
+        {
+          "label": "ចំនួនអប្បបរមា",
+          "value": "១០០ សន្លឹក"
+        },
+        {
+          "label": "រយៈពេលផលិត",
+          "value": "២–៣ ថ្ងៃធ្វើការ"
+        }
+      ]
     },
     {
       "sku": "BC-PRM",
@@ -32,15 +102,56 @@
       "category": "Business Cards",
       "description": "Thick soft-touch cards with raised spot UV to make your logo stand out.",
       "specifications": [
-        { "label": "Print", "value": "Full colour, 2 sides" },
-        { "label": "Paper weight", "value": "450 gsm" },
-        { "label": "Minimum quantity", "value": "200 cards" },
-        { "label": "Turnaround", "value": "4–5 working days" }
+        {
+          "label": "Print",
+          "value": "Full colour, 2 sides"
+        },
+        {
+          "label": "Paper weight",
+          "value": "450 gsm"
+        },
+        {
+          "label": "Minimum quantity",
+          "value": "200 cards"
+        },
+        {
+          "label": "Turnaround",
+          "value": "4–5 working days"
+        }
       ],
-      "materials": ["Soft-touch card 450gsm"],
-      "sizes": ["90 × 54 mm"],
-      "finishing_options": ["Spot UV", "Gold foil", "Silver foil", "Embossing"],
-      "in_stock": true
+      "materials": [
+        "Soft-touch card 450gsm"
+      ],
+      "sizes": [
+        "90 × 54 mm"
+      ],
+      "finishing_options": [
+        "Spot UV",
+        "Gold foil",
+        "Silver foil",
+        "Embossing"
+      ],
+      "in_stock": true,
+      "name_km": "នាមប័ណ្ណពិសេស Spot UV",
+      "description_km": "នាមប័ណ្ណក្រាស់ ទន់ដៃ មាន Spot UV ផុសឡើង ធ្វើឱ្យឡូហ្គោរបស់អ្នកលេចធ្លោ។",
+      "specifications_km": [
+        {
+          "label": "ការបោះពុម្ព",
+          "value": "ពណ៌ពេញ ២ ផ្ទៃ"
+        },
+        {
+          "label": "កម្រាស់ក្រដាស",
+          "value": "450 gsm"
+        },
+        {
+          "label": "ចំនួនអប្បបរមា",
+          "value": "២០០ សន្លឹក"
+        },
+        {
+          "label": "រយៈពេលផលិត",
+          "value": "៤–៥ ថ្ងៃធ្វើការ"
+        }
+      ]
     },
     {
       "sku": "FL-A5",
@@ -48,14 +159,51 @@
       "category": "Flyers & Brochures",
       "description": "Promotional flyers for events, menus and announcements.",
       "specifications": [
-        { "label": "Print", "value": "Full colour, 1 or 2 sides" },
-        { "label": "Minimum quantity", "value": "500 sheets" },
-        { "label": "Turnaround", "value": "2–3 working days" }
+        {
+          "label": "Print",
+          "value": "Full colour, 1 or 2 sides"
+        },
+        {
+          "label": "Minimum quantity",
+          "value": "500 sheets"
+        },
+        {
+          "label": "Turnaround",
+          "value": "2–3 working days"
+        }
       ],
-      "materials": ["Art paper 128gsm", "Art paper 157gsm", "Art card 260gsm"],
-      "sizes": ["A6", "A5", "A4"],
-      "finishing_options": ["None", "Gloss lamination", "Matte lamination"],
-      "in_stock": true
+      "materials": [
+        "Art paper 128gsm",
+        "Art paper 157gsm",
+        "Art card 260gsm"
+      ],
+      "sizes": [
+        "A6",
+        "A5",
+        "A4"
+      ],
+      "finishing_options": [
+        "None",
+        "Gloss lamination",
+        "Matte lamination"
+      ],
+      "in_stock": true,
+      "name_km": "ខិត្តប័ណ្ណ",
+      "description_km": "ខិត្តប័ណ្ណផ្សព្វផ្សាយ សម្រាប់ព្រឹត្តិការណ៍ ម៉ឺនុយ និងសេចក្តីជូនដំណឹង។",
+      "specifications_km": [
+        {
+          "label": "ការបោះពុម្ព",
+          "value": "ពណ៌ពេញ ១ ឬ ២ ផ្ទៃ"
+        },
+        {
+          "label": "ចំនួនអប្បបរមា",
+          "value": "៥០០ សន្លឹក"
+        },
+        {
+          "label": "រយៈពេលផលិត",
+          "value": "២–៣ ថ្ងៃធ្វើការ"
+        }
+      ]
     },
     {
       "sku": "BR-TRI",
@@ -63,14 +211,47 @@
       "category": "Flyers & Brochures",
       "description": "Folded brochures for product and service information, delivered pre-folded.",
       "specifications": [
-        { "label": "Print", "value": "Full colour, 2 sides" },
-        { "label": "Fold", "value": "Tri-fold (letter fold) or Z-fold" },
-        { "label": "Minimum quantity", "value": "300 pieces" }
+        {
+          "label": "Print",
+          "value": "Full colour, 2 sides"
+        },
+        {
+          "label": "Fold",
+          "value": "Tri-fold (letter fold) or Z-fold"
+        },
+        {
+          "label": "Minimum quantity",
+          "value": "300 pieces"
+        }
       ],
-      "materials": ["Art paper 157gsm", "Matte paper 170gsm"],
-      "sizes": ["A4 (folds to DL)"],
-      "finishing_options": ["Creasing & folding", "Matte lamination"],
-      "in_stock": true
+      "materials": [
+        "Art paper 157gsm",
+        "Matte paper 170gsm"
+      ],
+      "sizes": [
+        "A4 (folds to DL)"
+      ],
+      "finishing_options": [
+        "Creasing & folding",
+        "Matte lamination"
+      ],
+      "in_stock": true,
+      "name_km": "កូនសៀវភៅណែនាំបត់បី",
+      "description_km": "កូនសៀវភៅណែនាំសម្រាប់ព័ត៌មានផលិតផល និងសេវាកម្ម ដឹកជញ្ជូនជូនដោយបត់រួចជាស្រេច។",
+      "specifications_km": [
+        {
+          "label": "ការបោះពុម្ព",
+          "value": "ពណ៌ពេញ ២ ផ្ទៃ"
+        },
+        {
+          "label": "ការបត់",
+          "value": "បត់បី ឬបត់រាង Z"
+        },
+        {
+          "label": "ចំនួនអប្បបរមា",
+          "value": "៣០០ ច្បាប់"
+        }
+      ]
     },
     {
       "sku": "BN-VIN",
@@ -78,14 +259,50 @@
       "category": "Banners & Signage",
       "description": "Durable outdoor banner for shopfronts, events and promotions.",
       "specifications": [
-        { "label": "Print", "value": "Eco-solvent, full colour" },
-        { "label": "Use", "value": "Indoor & outdoor" },
-        { "label": "Turnaround", "value": "1–2 working days" }
+        {
+          "label": "Print",
+          "value": "Eco-solvent, full colour"
+        },
+        {
+          "label": "Use",
+          "value": "Indoor & outdoor"
+        },
+        {
+          "label": "Turnaround",
+          "value": "1–2 working days"
+        }
       ],
-      "materials": ["Frontlit PVC 440gsm", "Mesh PVC"],
-      "sizes": ["1 × 2 m", "1.5 × 3 m", "Custom size"],
-      "finishing_options": ["Hemmed edges", "Eyelets every 50 cm", "Pole pockets"],
-      "in_stock": true
+      "materials": [
+        "Frontlit PVC 440gsm",
+        "Mesh PVC"
+      ],
+      "sizes": [
+        "1 × 2 m",
+        "1.5 × 3 m",
+        "Custom size"
+      ],
+      "finishing_options": [
+        "Hemmed edges",
+        "Eyelets every 50 cm",
+        "Pole pockets"
+      ],
+      "in_stock": true,
+      "name_km": "បដាវីនីល",
+      "description_km": "បដាធន់ សម្រាប់ប្រើក្រៅអគារ មុខហាង ព្រឹត្តិការណ៍ និងការផ្សព្វផ្សាយ។",
+      "specifications_km": [
+        {
+          "label": "ការបោះពុម្ព",
+          "value": "Eco-solvent ពណ៌ពេញ"
+        },
+        {
+          "label": "ការប្រើប្រាស់",
+          "value": "ក្នុង និងក្រៅអគារ"
+        },
+        {
+          "label": "រយៈពេលផលិត",
+          "value": "១–២ ថ្ងៃធ្វើការ"
+        }
+      ]
     },
     {
       "sku": "BN-RUP",
@@ -93,13 +310,40 @@
       "category": "Banners & Signage",
       "description": "Portable retractable banner with carry bag. Sets up in under a minute.",
       "specifications": [
-        { "label": "Print", "value": "Full colour" },
-        { "label": "Includes", "value": "Aluminium stand + carry bag" }
+        {
+          "label": "Print",
+          "value": "Full colour"
+        },
+        {
+          "label": "Includes",
+          "value": "Aluminium stand + carry bag"
+        }
       ],
-      "materials": ["PET film", "PVC banner"],
-      "sizes": ["80 × 200 cm", "85 × 200 cm", "100 × 200 cm"],
-      "finishing_options": ["Matte lamination"],
-      "in_stock": false
+      "materials": [
+        "PET film",
+        "PVC banner"
+      ],
+      "sizes": [
+        "80 × 200 cm",
+        "85 × 200 cm",
+        "100 × 200 cm"
+      ],
+      "finishing_options": [
+        "Matte lamination"
+      ],
+      "in_stock": false,
+      "name_km": "បដាឈរ Roll-up",
+      "description_km": "បដាឈររមូរ ងាយយកតាមខ្លួន មានកាបូបដាក់ ដំឡើងបានក្នុងរយៈពេលតិចជាងមួយនាទី។",
+      "specifications_km": [
+        {
+          "label": "ការបោះពុម្ព",
+          "value": "ពណ៌ពេញ"
+        },
+        {
+          "label": "រួមបញ្ចូល",
+          "value": "ជើងអាលុយមីញ៉ូម + កាបូបដាក់"
+        }
+      ]
     },
     {
       "sku": "ST-DIE",
@@ -107,14 +351,53 @@
       "category": "Stickers & Labels",
       "description": "Custom-shaped stickers cut to the outline of your design.",
       "specifications": [
-        { "label": "Print", "value": "Full colour" },
-        { "label": "Adhesive", "value": "Permanent" },
-        { "label": "Minimum quantity", "value": "100 pieces" }
+        {
+          "label": "Print",
+          "value": "Full colour"
+        },
+        {
+          "label": "Adhesive",
+          "value": "Permanent"
+        },
+        {
+          "label": "Minimum quantity",
+          "value": "100 pieces"
+        }
       ],
-      "materials": ["White vinyl", "Clear vinyl", "Paper sticker"],
-      "sizes": ["3 × 3 cm", "5 × 5 cm", "7 × 7 cm", "Custom size"],
-      "finishing_options": ["Gloss lamination", "Matte lamination", "Kiss cut", "Die cut"],
-      "in_stock": true
+      "materials": [
+        "White vinyl",
+        "Clear vinyl",
+        "Paper sticker"
+      ],
+      "sizes": [
+        "3 × 3 cm",
+        "5 × 5 cm",
+        "7 × 7 cm",
+        "Custom size"
+      ],
+      "finishing_options": [
+        "Gloss lamination",
+        "Matte lamination",
+        "Kiss cut",
+        "Die cut"
+      ],
+      "in_stock": true,
+      "name_km": "ស្ទីគ័រកាត់តាមរាង",
+      "description_km": "ស្ទីគ័រកាត់តាមរាងនៃការរចនារបស់អ្នក។",
+      "specifications_km": [
+        {
+          "label": "ការបោះពុម្ព",
+          "value": "ពណ៌ពេញ"
+        },
+        {
+          "label": "កាវ",
+          "value": "ជាប់អចិន្ត្រៃយ៍"
+        },
+        {
+          "label": "ចំនួនអប្បបរមា",
+          "value": "១០០ ច្បាប់"
+        }
+      ]
     },
     {
       "sku": "ST-ROLL",
@@ -122,14 +405,50 @@
       "category": "Stickers & Labels",
       "description": "Roll labels for bottles, jars and packaging, ready for hand or machine application.",
       "specifications": [
-        { "label": "Print", "value": "Full colour" },
-        { "label": "Core size", "value": "76 mm" },
-        { "label": "Minimum quantity", "value": "500 labels" }
+        {
+          "label": "Print",
+          "value": "Full colour"
+        },
+        {
+          "label": "Core size",
+          "value": "76 mm"
+        },
+        {
+          "label": "Minimum quantity",
+          "value": "500 labels"
+        }
       ],
-      "materials": ["Semi-gloss paper", "White BOPP", "Clear BOPP"],
-      "sizes": ["Round 40 mm", "Rectangle 50 × 80 mm", "Custom size"],
-      "finishing_options": ["Varnish", "Gloss lamination"],
-      "in_stock": true
+      "materials": [
+        "Semi-gloss paper",
+        "White BOPP",
+        "Clear BOPP"
+      ],
+      "sizes": [
+        "Round 40 mm",
+        "Rectangle 50 × 80 mm",
+        "Custom size"
+      ],
+      "finishing_options": [
+        "Varnish",
+        "Gloss lamination"
+      ],
+      "in_stock": true,
+      "name_km": "ស្លាកផលិតផលជាដុំ",
+      "description_km": "ស្លាកជាដុំ សម្រាប់ដប កែវ និងកញ្ចប់ ងាយស្រួលបិទដោយដៃ ឬម៉ាស៊ីន។",
+      "specifications_km": [
+        {
+          "label": "ការបោះពុម្ព",
+          "value": "ពណ៌ពេញ"
+        },
+        {
+          "label": "ទំហំស្នូល",
+          "value": "៧៦ មម"
+        },
+        {
+          "label": "ចំនួនអប្បបរមា",
+          "value": "៥០០ ស្លាក"
+        }
+      ]
     },
     {
       "sku": "PK-BOX",
@@ -137,14 +456,50 @@
       "category": "Packaging",
       "description": "Folding boxes for cosmetics, food and retail products, printed to your design.",
       "specifications": [
-        { "label": "Print", "value": "Full colour, outside" },
-        { "label": "Minimum quantity", "value": "500 boxes" },
-        { "label": "Turnaround", "value": "7–10 working days" }
+        {
+          "label": "Print",
+          "value": "Full colour, outside"
+        },
+        {
+          "label": "Minimum quantity",
+          "value": "500 boxes"
+        },
+        {
+          "label": "Turnaround",
+          "value": "7–10 working days"
+        }
       ],
-      "materials": ["Ivory board 300gsm", "Kraft board 350gsm", "Corrugated E-flute"],
-      "sizes": ["Custom size"],
-      "finishing_options": ["Matte lamination", "Spot UV", "Hot foil", "Window patch"],
-      "in_stock": true
+      "materials": [
+        "Ivory board 300gsm",
+        "Kraft board 350gsm",
+        "Corrugated E-flute"
+      ],
+      "sizes": [
+        "Custom size"
+      ],
+      "finishing_options": [
+        "Matte lamination",
+        "Spot UV",
+        "Hot foil",
+        "Window patch"
+      ],
+      "in_stock": true,
+      "name_km": "ប្រអប់បោះពុម្ពតាមតម្រូវការ",
+      "description_km": "ប្រអប់បត់ សម្រាប់គ្រឿងសំអាង អាហារ និងផលិតផលលក់រាយ បោះពុម្ពតាមការរចនារបស់អ្នក។",
+      "specifications_km": [
+        {
+          "label": "ការបោះពុម្ព",
+          "value": "ពណ៌ពេញ ផ្នែកខាងក្រៅ"
+        },
+        {
+          "label": "ចំនួនអប្បបរមា",
+          "value": "៥០០ ប្រអប់"
+        },
+        {
+          "label": "រយៈពេលផលិត",
+          "value": "៧–១០ ថ្ងៃធ្វើការ"
+        }
+      ]
     },
     {
       "sku": "PK-BAG",
@@ -152,13 +507,42 @@
       "category": "Packaging",
       "description": "Branded paper bags with rope or twisted paper handles.",
       "specifications": [
-        { "label": "Print", "value": "1–4 colours" },
-        { "label": "Minimum quantity", "value": "300 bags" }
+        {
+          "label": "Print",
+          "value": "1–4 colours"
+        },
+        {
+          "label": "Minimum quantity",
+          "value": "300 bags"
+        }
       ],
-      "materials": ["Kraft paper 120gsm", "Art paper 210gsm"],
-      "sizes": ["S 18 × 8 × 22 cm", "M 25 × 10 × 32 cm", "L 32 × 12 × 40 cm"],
-      "finishing_options": ["Rope handle", "Twisted paper handle", "Matte lamination"],
-      "in_stock": true
+      "materials": [
+        "Kraft paper 120gsm",
+        "Art paper 210gsm"
+      ],
+      "sizes": [
+        "S 18 × 8 × 22 cm",
+        "M 25 × 10 × 32 cm",
+        "L 32 × 12 × 40 cm"
+      ],
+      "finishing_options": [
+        "Rope handle",
+        "Twisted paper handle",
+        "Matte lamination"
+      ],
+      "in_stock": true,
+      "name_km": "កាបូបក្រដាស",
+      "description_km": "កាបូបក្រដាសមានម៉ាកយីហោ ជាមួយដៃកាន់ខ្សែ ឬក្រដាសរមួល។",
+      "specifications_km": [
+        {
+          "label": "ការបោះពុម្ព",
+          "value": "១–៤ ពណ៌"
+        },
+        {
+          "label": "ចំនួនអប្បបរមា",
+          "value": "៣០០ កាបូប"
+        }
+      ]
     },
     {
       "sku": "AP-TEE",
@@ -166,14 +550,52 @@
       "category": "Apparel",
       "description": "Cotton T-shirts for uniforms, events and merchandise.",
       "specifications": [
-        { "label": "Print method", "value": "Screen print or DTF" },
-        { "label": "Fabric", "value": "100% cotton, 180gsm" },
-        { "label": "Minimum quantity", "value": "20 pieces" }
+        {
+          "label": "Print method",
+          "value": "Screen print or DTF"
+        },
+        {
+          "label": "Fabric",
+          "value": "100% cotton, 180gsm"
+        },
+        {
+          "label": "Minimum quantity",
+          "value": "20 pieces"
+        }
       ],
-      "materials": ["100% cotton", "Cotton-poly blend"],
-      "sizes": ["S", "M", "L", "XL", "XXL"],
-      "finishing_options": ["Front print", "Back print", "Sleeve print"],
-      "in_stock": true
+      "materials": [
+        "100% cotton",
+        "Cotton-poly blend"
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "finishing_options": [
+        "Front print",
+        "Back print",
+        "Sleeve print"
+      ],
+      "in_stock": true,
+      "name_km": "អាវយឺតបោះពុម្ព",
+      "description_km": "អាវយឺតកប្បាស សម្រាប់ឯកសណ្ឋាន ព្រឹត្តិការណ៍ និងទំនិញផ្សព្វផ្សាយ។",
+      "specifications_km": [
+        {
+          "label": "វិធីបោះពុម្ព",
+          "value": "Screen print ឬ DTF"
+        },
+        {
+          "label": "ក្រណាត់",
+          "value": "កប្បាស ១០០% 180gsm"
+        },
+        {
+          "label": "ចំនួនអប្បបរមា",
+          "value": "២០ ឈុត"
+        }
+      ]
     },
     {
       "sku": "SN-LTR",
@@ -181,13 +603,40 @@
       "category": "Stationery",
       "description": "Matching company letterheads and envelopes for a professional look.",
       "specifications": [
-        { "label": "Print", "value": "Full colour, 1 side" },
-        { "label": "Minimum quantity", "value": "500 pieces" }
+        {
+          "label": "Print",
+          "value": "Full colour, 1 side"
+        },
+        {
+          "label": "Minimum quantity",
+          "value": "500 pieces"
+        }
       ],
-      "materials": ["Woodfree paper 100gsm", "Woodfree paper 120gsm"],
-      "sizes": ["A4 letterhead", "DL envelope", "C4 envelope"],
-      "finishing_options": ["None"],
-      "in_stock": true
+      "materials": [
+        "Woodfree paper 100gsm",
+        "Woodfree paper 120gsm"
+      ],
+      "sizes": [
+        "A4 letterhead",
+        "DL envelope",
+        "C4 envelope"
+      ],
+      "finishing_options": [
+        "None"
+      ],
+      "in_stock": true,
+      "name_km": "ក្បាលលិខិត និងស្រោមសំបុត្រ",
+      "description_km": "ក្បាលលិខិត និងស្រោមសំបុត្រក្រុមហ៊ុនដែលស៊ីគ្នា សម្រាប់រូបភាពវិជ្ជាជីវៈ។",
+      "specifications_km": [
+        {
+          "label": "ការបោះពុម្ព",
+          "value": "ពណ៌ពេញ ១ ផ្ទៃ"
+        },
+        {
+          "label": "ចំនួនអប្បបរមា",
+          "value": "៥០០ ច្បាប់"
+        }
+      ]
     }
   ],
   "contacts": {
@@ -197,6 +646,13 @@
     "email": "hello@example.com",
     "address": "Placeholder address, Phnom Penh, Cambodia",
     "facebook": "",
-    "website": ""
+    "website": "",
+    "address_km": "អាសយដ្ឋានគំរូ ភ្នំពេញ កម្ពុជា"
+  },
+  "brand": {
+    "brand_name": "Angkor Printing",
+    "brand_name_km": "អង្គរ ព្រីនធីង",
+    "tagline": "Product Catalogue",
+    "tagline_km": "កាតាឡុកផលិតផល"
   }
 }

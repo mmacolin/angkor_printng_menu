@@ -17,17 +17,25 @@ export function slugify(text: string): string {
     .slice(0, 80);
 }
 
+/**
+ * Empty until loaded. The company name deliberately does not appear in the public
+ * JavaScript (customers download it too); it comes from the database, or from the
+ * placeholder file in demo mode.
+ */
 export const DEFAULT_BRAND: Brand = {
-  brand_name: 'Angkor Printing',
-  tagline: 'Product Catalogue',
+  brand_name: '',
+  brand_name_km: '',
+  tagline: '',
+  tagline_km: '',
   logo_url: null,
 };
 
-/** Branding must always be visible: fall back to defaults for any blank field. */
 function withBrandDefaults(row: Partial<Brand> | null): Brand {
   return {
-    brand_name: row?.brand_name?.trim() || DEFAULT_BRAND.brand_name,
-    tagline: row?.tagline?.trim() ?? DEFAULT_BRAND.tagline,
+    brand_name: row?.brand_name?.trim() ?? '',
+    brand_name_km: row?.brand_name_km?.trim() ?? '',
+    tagline: row?.tagline?.trim() ?? '',
+    tagline_km: row?.tagline_km?.trim() ?? '',
     logo_url: row?.logo_url?.trim() || null,
   };
 }
@@ -37,19 +45,28 @@ function db() {
   return supabase;
 }
 
+function cleanSpecs(v: unknown): Spec[] {
+  return (Array.isArray(v) ? (v as Spec[]) : []).filter((s) => s && (s.label || s.value));
+}
+
 function normalizeProduct(row: Record<string, unknown>): Product {
-  const specs = Array.isArray(row.specifications) ? (row.specifications as Spec[]) : [];
   return {
     id: String(row.id),
     slug: String(row.slug),
     sku: (row.sku as string | null) ?? null,
     name: String(row.name ?? ''),
+    name_km: String(row.name_km ?? ''),
     category_id: (row.category_id as string | null) ?? null,
     description: String(row.description ?? ''),
-    specifications: specs.filter((s) => s && (s.label || s.value)),
+    description_km: String(row.description_km ?? ''),
+    specifications: cleanSpecs(row.specifications),
+    specifications_km: cleanSpecs(row.specifications_km),
     materials: (row.materials as string[]) ?? [],
+    materials_km: (row.materials_km as string[]) ?? [],
     sizes: (row.sizes as string[]) ?? [],
+    sizes_km: (row.sizes_km as string[]) ?? [],
     finishing_options: (row.finishing_options as string[]) ?? [],
+    finishing_options_km: (row.finishing_options_km as string[]) ?? [],
     images: (row.images as string[]) ?? [],
     in_stock: row.in_stock !== false,
     is_published: row.is_published !== false,
@@ -62,6 +79,7 @@ function normalizeProduct(row: Record<string, unknown>): Product {
 // ---------------------------------------------------------------------------
 
 interface DemoData {
+  brand: Brand;
   categories: Category[];
   products: Product[];
   contacts: Contacts;
@@ -72,18 +90,25 @@ let demoData: Promise<DemoData> | null = null;
 /** Loaded on demand so placeholder data is never part of the live site's main bundle. */
 function demo(): Promise<DemoData> {
   demoData ??= import('../data/placeholder.json').then(({ default: placeholder }) => ({
-    categories: placeholder.categories.map((c) => ({ id: slugify(c.name), name: c.name, sort_order: c.sort_order })),
+    brand: { ...DEFAULT_BRAND, ...placeholder.brand },
+    categories: placeholder.categories.map((c) => ({ id: slugify(c.name), name: c.name, name_km: c.name_km, sort_order: c.sort_order })),
     products: placeholder.products.map((p, i) => ({
       id: slugify(p.name),
       slug: slugify(p.name),
       sku: p.sku,
       name: p.name,
+      name_km: p.name_km,
       category_id: slugify(p.category),
       description: p.description,
+      description_km: p.description_km,
       specifications: p.specifications,
+      specifications_km: p.specifications_km,
       materials: p.materials,
+      materials_km: [],
       sizes: p.sizes,
+      sizes_km: [],
       finishing_options: p.finishing_options,
+      finishing_options_km: [],
       images: [],
       in_stock: p.in_stock,
       is_published: true,
@@ -100,7 +125,7 @@ function demo(): Promise<DemoData> {
 
 export async function fetchCategories(): Promise<Category[]> {
   if (isDemoMode) return (await demo()).categories;
-  const { data, error } = await db().from('categories').select('id,name,sort_order').order('sort_order').order('name');
+  const { data, error } = await db().from('categories').select('id,name,name_km,sort_order').order('sort_order').order('name');
   if (error) throw error;
   return data as Category[];
 }
@@ -126,8 +151,8 @@ export async function fetchProductBySlug(slug: string): Promise<Product | null> 
 }
 
 export async function fetchBrand(): Promise<Brand> {
-  if (isDemoMode) return DEFAULT_BRAND;
-  const { data, error } = await db().from('brand_settings').select('brand_name,tagline,logo_url').eq('id', 1).maybeSingle();
+  if (isDemoMode) return (await demo()).brand;
+  const { data, error } = await db().from('brand_settings').select('brand_name,brand_name_km,tagline,tagline_km,logo_url').eq('id', 1).maybeSingle();
   if (error) {
     console.warn('Could not load branding, using defaults', error);
     return DEFAULT_BRAND;
@@ -136,14 +161,14 @@ export async function fetchBrand(): Promise<Brand> {
 }
 
 /**
- * Contact details. Only call this when contacts are visible — pages opened from a
- * "Hide Angkor Printing Contact" link never request this data at all.
+ * Contact details. Only requested in the wholesaler view — customer pages
+ * (opened from a shared link) never request this data at all.
  */
 export async function fetchContacts(): Promise<Contacts> {
   if (isDemoMode) return (await demo()).contacts;
   const { data, error } = await db()
     .from('contact_settings')
-    .select('phone,whatsapp,telegram,email,address,facebook,website')
+    .select('phone,whatsapp,telegram,email,address,address_km,facebook,website')
     .eq('id', 1)
     .maybeSingle();
   if (error) throw error;
@@ -167,6 +192,7 @@ export async function saveProduct(input: ProductInput): Promise<Product> {
     sku: fields.sku?.trim() || null,
     slug: fields.slug?.trim() || slugify(fields.name),
     specifications: fields.specifications.filter((s) => s.label.trim() || s.value.trim()),
+    specifications_km: fields.specifications_km.filter((s) => s.label.trim() || s.value.trim()),
   };
   const query = id
     ? db().from('products').update(payload).eq('id', id).select('*').single()
@@ -214,7 +240,7 @@ export async function removeStoredImages(urls: string[]) {
   if (error) console.warn('Some images could not be removed from storage', error);
 }
 
-export async function saveCategory(cat: { id?: string; name: string; sort_order: number }) {
+export async function saveCategory(cat: { id?: string; name: string; name_km: string; sort_order: number }) {
   const { id, ...fields } = cat;
   const { error } = id
     ? await db().from('categories').update(fields).eq('id', id)
@@ -231,11 +257,14 @@ export async function deleteCategory(id: string) {
 }
 
 export async function saveBrand(brand: Brand) {
+  if (!brand.brand_name.trim()) throw new Error('Please enter the brand name.');
   const { error } = await db()
     .from('brand_settings')
     .update({
-      brand_name: brand.brand_name.trim() || DEFAULT_BRAND.brand_name,
+      brand_name: brand.brand_name.trim(),
+      brand_name_km: brand.brand_name_km.trim(),
       tagline: brand.tagline.trim(),
+      tagline_km: brand.tagline_km.trim(),
       logo_url: brand.logo_url || null,
     })
     .eq('id', 1);

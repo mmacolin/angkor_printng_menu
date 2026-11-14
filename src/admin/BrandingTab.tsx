@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { RotateCcw, Upload } from 'lucide-react';
-import { DEFAULT_BRAND, fetchBrand, fetchContacts, removeStoredImages, saveBrand, saveContacts, uploadImage } from '../lib/api';
+import { fetchBrand, fetchContacts, removeStoredImages, saveBrand, saveContacts, uploadImage } from '../lib/api';
 import type { Brand, Contacts } from '../lib/types';
 import { Button, Field, inputClass } from './ui';
 
@@ -70,7 +70,9 @@ export default function BrandingTab({ notify, notifyError }: Props) {
       <section className="space-y-4 rounded-2xl bg-white p-4 ring-1 ring-slate-200 sm:p-6">
         <div>
           <h2 className="text-lg font-bold text-ink">Branding</h2>
-          <p className="text-sm text-slate-500">Always shown on every catalogue page, including shared links.</p>
+          <p className="text-sm text-slate-500">
+            Shown to wholesalers on the normal catalogue. Automatically hidden on links wholesalers share with their customers.
+          </p>
         </div>
 
         <div className="flex items-center gap-4">
@@ -98,20 +100,28 @@ export default function BrandingTab({ notify, notifyError }: Props) {
           </div>
         </div>
 
-        <Field label="Brand name" hint="Cannot be left empty — it falls back to “Angkor Printing”.">
-          <input value={brand.brand_name} onChange={(e) => setBrand({ ...brand, brand_name: e.target.value })} placeholder={DEFAULT_BRAND.brand_name} className={inputClass} />
+        <Field label="Brand name" hint="Required. Shown to wholesalers only.">
+          <input value={brand.brand_name} onChange={(e) => setBrand({ ...brand, brand_name: e.target.value })} placeholder="Angkor Printing" className={inputClass} />
         </Field>
-        <Field label="Tagline" hint="Short line under the brand name, e.g. “Product Catalogue”.">
-          <input value={brand.tagline} onChange={(e) => setBrand({ ...brand, tagline: e.target.value })} className={inputClass} />
+        <Field label="Brand name in Khmer" hint="Optional. Shown when the site is set to ខ្មែរ.">
+          <input value={brand.brand_name_km} onChange={(e) => setBrand({ ...brand, brand_name_km: e.target.value })} lang="km" className={inputClass} />
         </Field>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Field label="Tagline" hint="Short line under the brand name, e.g. “Product Catalogue”.">
+            <input value={brand.tagline} onChange={(e) => setBrand({ ...brand, tagline: e.target.value })} className={inputClass} />
+          </Field>
+          <Field label="Tagline in Khmer">
+            <input value={brand.tagline_km} onChange={(e) => setBrand({ ...brand, tagline_km: e.target.value })} lang="km" placeholder="កាតាឡុកផលិតផល" className={inputClass} />
+          </Field>
+        </div>
       </section>
 
       <section className="space-y-4 rounded-2xl bg-white p-4 ring-1 ring-slate-200 sm:p-6">
         <div>
           <h2 className="text-lg font-bold text-ink">Contact details</h2>
           <p className="text-sm text-slate-500">
-            Shown on the normal catalogue. Hidden — and never sent to the browser — on links shared with “Hide Angkor Printing Contact” switched on. Leave a
-            field empty to not show it.
+            Shown to wholesalers. Automatically hidden — and never sent to the browser — on links wholesalers share with customers. Leave a field empty
+            to not show it.
           </p>
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
@@ -121,9 +131,14 @@ export default function BrandingTab({ notify, notifyError }: Props) {
             </Field>
           ))}
         </div>
-        <Field label="Address">
-          <textarea value={contacts.address} onChange={(e) => setContacts({ ...contacts, address: e.target.value })} rows={2} className={inputClass} />
-        </Field>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Field label="Address">
+            <textarea value={contacts.address} onChange={(e) => setContacts({ ...contacts, address: e.target.value })} rows={2} className={inputClass} />
+          </Field>
+          <Field label="Address in Khmer">
+            <textarea value={contacts.address_km} onChange={(e) => setContacts({ ...contacts, address_km: e.target.value })} rows={2} lang="km" className={inputClass} />
+          </Field>
+        </div>
       </section>
 
       <div className="sticky bottom-0 -mx-4 flex justify-end border-t border-slate-200 bg-slate-100/95 px-4 py-3 backdrop-blur">

@@ -11,14 +11,15 @@ interface Props {
 
 export default function CategoriesTab({ notify, notifyError }: Props) {
   const [categories, setCategories] = useState<Category[] | null>(null);
-  const [drafts, setDrafts] = useState<Record<string, { name: string; sort_order: number }>>({});
+  const [drafts, setDrafts] = useState<Record<string, { name: string; name_km: string; sort_order: number }>>({});
   const [newName, setNewName] = useState('');
+  const [newNameKm, setNewNameKm] = useState('');
 
   const load = useCallback(() => {
     fetchCategories()
       .then((c) => {
         setCategories(c);
-        setDrafts(Object.fromEntries(c.map((x) => [x.id, { name: x.name, sort_order: x.sort_order }])));
+        setDrafts(Object.fromEntries(c.map((x) => [x.id, { name: x.name, name_km: x.name_km, sort_order: x.sort_order }])));
       })
       .catch(notifyError);
   }, [notifyError]);
@@ -30,8 +31,9 @@ export default function CategoriesTab({ notify, notifyError }: Props) {
     if (!name) return;
     try {
       const maxOrder = Math.max(0, ...(categories ?? []).map((c) => c.sort_order));
-      await saveCategory({ name, sort_order: maxOrder + 1 });
+      await saveCategory({ name, name_km: newNameKm.trim(), sort_order: maxOrder + 1 });
       setNewName('');
+      setNewNameKm('');
       notify(`Added category “${name}”`);
       load();
     } catch (e) {
@@ -43,7 +45,7 @@ export default function CategoriesTab({ notify, notifyError }: Props) {
     const d = drafts[c.id];
     if (!d?.name.trim()) return notifyError(new Error('Category name cannot be empty.'));
     try {
-      await saveCategory({ id: c.id, name: d.name.trim(), sort_order: d.sort_order });
+      await saveCategory({ id: c.id, name: d.name.trim(), name_km: d.name_km.trim(), sort_order: d.sort_order });
       notify('Category saved');
       load();
     } catch (e) {
@@ -66,12 +68,20 @@ export default function CategoriesTab({ notify, notifyError }: Props) {
     <div className="mx-auto max-w-2xl">
       <div className="rounded-2xl bg-white p-4 ring-1 ring-slate-200">
         <p className="text-sm font-semibold text-ink">Add a category</p>
-        <div className="mt-2 flex gap-2">
+        <div className="mt-2 flex flex-col gap-2 sm:flex-row">
           <input
             value={newName}
             onChange={(e) => setNewName(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), add())}
-            placeholder="e.g. Calendars"
+            placeholder="English, e.g. Calendars"
+            className={inputClass}
+          />
+          <input
+            value={newNameKm}
+            onChange={(e) => setNewNameKm(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), add())}
+            placeholder="ខ្មែរ (optional)"
+            lang="km"
             className={inputClass}
           />
           <Button onClick={add} disabled={!newName.trim()}>
@@ -81,8 +91,9 @@ export default function CategoriesTab({ notify, notifyError }: Props) {
       </div>
 
       <div className="mt-4 rounded-2xl bg-white ring-1 ring-slate-200">
-        <div className="grid grid-cols-[1fr_5rem_auto] gap-2 border-b border-slate-100 px-4 py-2.5 text-xs font-semibold uppercase tracking-wide text-slate-500">
-          <span>Name</span>
+        <div className="grid grid-cols-[1fr_1fr_4.5rem_auto] gap-2 border-b border-slate-100 px-4 py-2.5 text-xs font-semibold uppercase tracking-wide text-slate-500">
+          <span>English</span>
+          <span>ខ្មែរ</span>
           <span>Order</span>
           <span className="sr-only">Actions</span>
         </div>
@@ -93,14 +104,21 @@ export default function CategoriesTab({ notify, notifyError }: Props) {
         ) : (
           <ul className="divide-y divide-slate-100">
             {categories.map((c) => {
-              const d = drafts[c.id] ?? { name: c.name, sort_order: c.sort_order };
-              const dirty = d.name !== c.name || d.sort_order !== c.sort_order;
+              const d = drafts[c.id] ?? { name: c.name, name_km: c.name_km, sort_order: c.sort_order };
+              const dirty = d.name !== c.name || d.name_km !== c.name_km || d.sort_order !== c.sort_order;
               return (
-                <li key={c.id} className="grid grid-cols-[1fr_5rem_auto] items-center gap-2 px-4 py-2">
+                <li key={c.id} className="grid grid-cols-[1fr_1fr_4.5rem_auto] items-center gap-2 px-4 py-2">
                   <input
                     value={d.name}
                     onChange={(e) => setDrafts((all) => ({ ...all, [c.id]: { ...d, name: e.target.value } }))}
-                    aria-label="Category name"
+                    aria-label="Category name (English)"
+                    className={inputClass}
+                  />
+                  <input
+                    value={d.name_km}
+                    onChange={(e) => setDrafts((all) => ({ ...all, [c.id]: { ...d, name_km: e.target.value } }))}
+                    aria-label="Category name (Khmer)"
+                    lang="km"
                     className={inputClass}
                   />
                   <input

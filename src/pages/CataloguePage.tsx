@@ -1,22 +1,29 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Search, X } from 'lucide-react';
 import { fetchCategories, fetchProducts } from '../lib/api';
-import { useSite } from '../lib/site';
+import { usePageTitle, useSite } from '../lib/site';
+import { categoryLabel, localize, useLang } from '../lib/i18n';
 import type { Category, Product } from '../lib/types';
 import ProductCard from '../components/ProductCard';
 import ShareDialog from '../components/ShareDialog';
 
-function matches(p: Product, categoryName: string, q: string) {
+/** Searches English and Khmer text, so either language finds the product. */
+function matches(p: Product, categoryNames: string, q: string) {
   if (!q) return true;
   const haystack = [
     p.name,
+    p.name_km,
     p.sku ?? '',
     p.description,
-    categoryName,
+    p.description_km,
+    categoryNames,
     ...p.materials,
+    ...p.materials_km,
     ...p.sizes,
+    ...p.sizes_km,
     ...p.finishing_options,
-    ...p.specifications.flatMap((s) => [s.label, s.value]),
+    ...p.finishing_options_km,
+    ...[...p.specifications, ...p.specifications_km].flatMap((s) => [s.label, s.value]),
   ]
     .join(' ')
     .toLowerCase();
@@ -28,7 +35,8 @@ function matches(p: Product, categoryName: string, q: string) {
 }
 
 export default function CataloguePage() {
-  const { brand } = useSite();
+  const { isCustomerView } = useSite();
+  const { lang, t } = useLang();
   const [products, setProducts] = useState<Product[] | null>(null);
   const [categories, setCategories] = useState<Category[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -36,9 +44,7 @@ export default function CataloguePage() {
   const [activeCategory, setActiveCategory] = useState<string>('all');
   const [sharing, setSharing] = useState<Product | null>(null);
 
-  useEffect(() => {
-    document.title = `${brand.brand_name} — Product Catalogue`;
-  }, [brand.brand_name]);
+  usePageTitle(t.productCatalogue);
 
   useEffect(() => {
     Promise.all([fetchProducts(), fetchCategories()])
@@ -48,11 +54,12 @@ export default function CataloguePage() {
       })
       .catch((e) => {
         console.error(e);
-        setError('The catalogue could not be loaded. Please check your connection and try again.');
+        setError('load');
       });
   }, []);
 
-  const categoryName = useMemo(() => new Map(categories.map((c) => [c.id, c.name])), [categories]);
+  const categoryById = useMemo(() => new Map(categories.map((c) => [c.id, c])), [categories]);
+  const categoryName = (id: string | null) => categoryLabel(categoryById.get(id ?? ''), lang);
 
   // Only show categories that actually contain products.
   const usedCategories = useMemo(
@@ -65,9 +72,9 @@ export default function CataloguePage() {
       (products ?? []).filter(
         (p) =>
           (activeCategory === 'all' || p.category_id === activeCategory) &&
-          matches(p, categoryName.get(p.category_id ?? '') ?? '', query.trim()),
+          matches(p, `${categoryById.get(p.category_id ?? '')?.name ?? ''} ${categoryById.get(p.category_id ?? '')?.name_km ?? ''}`, query.trim()),
       ),
-    [products, activeCategory, query, categoryName],
+    [products, activeCategory, query, categoryById],
   );
 
   return (
@@ -80,15 +87,15 @@ export default function CataloguePage() {
           inputMode="search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search products, materials, sizes…"
-          aria-label="Search products"
+          placeholder={t.searchPlaceholder}
+          aria-label={t.searchLabel}
           className="w-full rounded-2xl border border-slate-200 bg-white py-3 pl-10 pr-10 text-[15px] shadow-sm outline-none focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/30"
         />
         {query && (
           <button
             type="button"
             onClick={() => setQuery('')}
-            aria-label="Clear search"
+            aria-label={t.clearSearch}
             className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full p-1.5 text-slate-400 hover:bg-slate-100"
           >
             <X size={16} />
@@ -99,7 +106,7 @@ export default function CataloguePage() {
       {/* Category chips */}
       {usedCategories.length > 0 && (
         <nav aria-label="Categories" className="no-scrollbar -mx-4 mt-3 flex gap-2 overflow-x-auto px-4 pb-1">
-          {[{ id: 'all', name: 'All products' }, ...usedCategories].map((c) => {
+          {[{ id: 'all', label: t.allProducts }, ...usedCategories.map((c) => ({ id: c.id, label: categoryLabel(c, lang) }))].map((c) => {
             const active = activeCategory === c.id;
             return (
               <button
@@ -111,7 +118,7 @@ export default function CataloguePage() {
                   active ? 'bg-brand-blue-dark text-white shadow-sm' : 'bg-white text-slate-600 ring-1 ring-slate-200 hover:bg-slate-100'
                 }`}
               >
-                {c.name}
+                {c.label}
               </button>
             );
           })}
@@ -120,7 +127,7 @@ export default function CataloguePage() {
 
       {/* Results */}
       {error ? (
-        <p className="mt-10 rounded-2xl bg-red-50 p-4 text-center text-sm text-red-700">{error}</p>
+        <p className="mt-10 rounded-2xl bg-red-50 p-4 text-center text-sm text-red-700">{t.loadError}</p>
       ) : products === null ? (
         <div className="mt-4 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4" aria-busy="true">
           {Array.from({ length: 8 }).map((_, i) => (
@@ -136,11 +143,11 @@ export default function CataloguePage() {
       ) : (
         <>
           <p className="mt-4 text-sm text-slate-500" aria-live="polite">
-            {visible.length} product{visible.length === 1 ? '' : 's'}
+            {t.productCount(visible.length)}
           </p>
           {visible.length === 0 ? (
             <div className="mt-6 rounded-2xl bg-white p-8 text-center ring-1 ring-slate-200">
-              <p className="font-semibold text-ink">No products match your search.</p>
+              <p className="font-semibold text-ink">{t.noMatches}</p>
               <button
                 type="button"
                 onClick={() => {
@@ -149,7 +156,7 @@ export default function CataloguePage() {
                 }}
                 className="mt-3 text-sm font-semibold text-brand-blue-dark hover:underline"
               >
-                Show all products
+                {t.showAll}
               </button>
             </div>
           ) : (
@@ -158,9 +165,9 @@ export default function CataloguePage() {
                 <ProductCard
                   key={p.id}
                   product={p}
-                  categoryName={categoryName.get(p.category_id ?? '')}
+                  categoryName={categoryName(p.category_id)}
                   eager={i < 4}
-                  onShare={setSharing}
+                  onShare={isCustomerView ? undefined : setSharing}
                 />
               ))}
             </div>
@@ -168,8 +175,8 @@ export default function CataloguePage() {
         </>
       )}
 
-      {sharing && (
-        <ShareDialog kind="product" path={`/p/${sharing.slug}`} title={`${sharing.name} — ${brand.brand_name}`} onClose={() => setSharing(null)} />
+      {sharing && !isCustomerView && (
+        <ShareDialog kind="product" path={`/p/${sharing.slug}`} title={localize(sharing, lang).name} onClose={() => setSharing(null)} />
       )}
     </div>
   );

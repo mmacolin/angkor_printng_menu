@@ -1,6 +1,7 @@
 import { lazy, Suspense } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
-import { KeepContactParam, SiteProvider } from './lib/site';
+import { KeepCustomerParam, SiteProvider } from './lib/site';
+import { LanguageProvider } from './lib/i18n';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import CataloguePage from './pages/CataloguePage';
@@ -13,8 +14,9 @@ const AdminApp = lazy(() => import('./admin/AdminApp'));
 
 function PublicSite() {
   return (
+    <LanguageProvider>
     <SiteProvider>
-      <KeepContactParam />
+      <KeepCustomerParam />
       <div className="flex min-h-dvh flex-col">
         <Header />
         <main className="flex-1">
@@ -27,6 +29,7 @@ function PublicSite() {
         <Footer />
       </div>
     </SiteProvider>
+    </LanguageProvider>
   );
 }
 
