@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.vercel/
+.DS_Store
+*.log
+.env
+.env.*
+!.env.example
+# Your real product data stays local until you choose to commit it
+products.csv
+images/

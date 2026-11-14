@@ -1,6 +1,5 @@
-sku,name,category,colors,sizes,description,image_file,in_stock
-TS-001,Classic Cotton T-Shirt,T-Shirts,White|Black|Navy|Red,S|M|L|XL|XXL,"100% cotton, 180gsm. Front and back print available (screen print or DTF).",TS-001.jpg,TRUE
-PL-001,Polo Shirt with Embroidered Logo,Polo Shirts,White|Black|Royal Blue,S|M|L|XL,"Pique cotton polo. Logo embroidered on the left chest.",PL-001.jpg,TRUE
-MG-001,Ceramic Mug 11oz,Mugs,White|Black,11oz,"Full-colour sublimation print. Dishwasher safe.",MG-001.jpg,TRUE
-BC-001,Business Cards,Stationery,,90x54mm,"350gsm art card, matte or gloss lamination, single or double sided.",BC-001.jpg,TRUE
-BN-001,Vinyl Banner,Banners & Signage,,1x2m|2x3m|Custom,"Outdoor vinyl with eyelets. Weather resistant.",BN-001.jpg,FALSE
+sku,name,category,description,specifications,materials,sizes,finishing_options,image_files,in_stock
+BC-STD,Standard Business Cards,Business Cards,"Crisp full-colour business cards for everyday networking.",Print: Full colour 1 or 2 sides|Paper weight: 350 gsm|Minimum quantity: 100 cards|Turnaround: 2–3 working days,Art card 350gsm|Matte card 350gsm,90 × 54 mm|85 × 55 mm,Matte lamination|Gloss lamination|Rounded corners,BC-STD.jpg|BC-STD-back.jpg,TRUE
+FL-A5,Flyers,Flyers & Brochures,"Promotional flyers for events, menus and announcements.",Print: Full colour|Minimum quantity: 500 sheets,Art paper 128gsm|Art paper 157gsm,A6|A5|A4,Gloss lamination|Matte lamination,FL-A5.jpg,TRUE
+BN-VIN,Vinyl Banner,Banners & Signage,"Durable outdoor banner for shopfronts and events.",Print: Eco-solvent full colour|Use: Indoor & outdoor,Frontlit PVC 440gsm|Mesh PVC,1 × 2 m|1.5 × 3 m|Custom size,Hemmed edges|Eyelets every 50 cm,BN-VIN.jpg,TRUE
+ST-DIE,Die-cut Stickers,Stickers & Labels,"Custom-shaped stickers cut to the outline of your design.",Adhesive: Permanent|Minimum quantity: 100 pieces,White vinyl|Clear vinyl,5 × 5 cm|7 × 7 cm|Custom size,Gloss lamination|Die cut,ST-DIE.jpg,FALSE

@@ -1,0 +1,29 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-brand-yellow: #f8c327;
+  --color-brand-yellow-dark: #e0aa0c;
+  --color-brand-blue: #5792cc;
+  --color-brand-blue-dark: #2f6aa6;
+  --color-ink: #1f2937;
+  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans Khmer', 'Helvetica Neue', Arial, sans-serif;
+}
+
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  @apply bg-slate-50 text-ink antialiased;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+.focus-ring {
+  @apply focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue;
+}
