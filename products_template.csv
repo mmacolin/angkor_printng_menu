@@ -1,0 +1,6 @@
+sku,name,category,colors,sizes,description,image_file,in_stock
+TS-001,Classic Cotton T-Shirt,T-Shirts,White|Black|Navy|Red,S|M|L|XL|XXL,"100% cotton, 180gsm. Front and back print available (screen print or DTF).",TS-001.jpg,TRUE
+PL-001,Polo Shirt with Embroidered Logo,Polo Shirts,White|Black|Royal Blue,S|M|L|XL,"Pique cotton polo. Logo embroidered on the left chest.",PL-001.jpg,TRUE
+MG-001,Ceramic Mug 11oz,Mugs,White|Black,11oz,"Full-colour sublimation print. Dishwasher safe.",MG-001.jpg,TRUE
+BC-001,Business Cards,Stationery,,90x54mm,"350gsm art card, matte or gloss lamination, single or double sided.",BC-001.jpg,TRUE
+BN-001,Vinyl Banner,Banners & Signage,,1x2m|2x3m|Custom,"Outdoor vinyl with eyelets. Weather resistant.",BN-001.jpg,FALSE
