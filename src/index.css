@@ -1,12 +1,27 @@
 @import 'tailwindcss';
 
+/*
+ * Hanuman for all Khmer text (self-hosted, SIL Open Font License — see public/fonts/Hanuman-OFL.txt).
+ * Limited to Khmer characters, so every Khmer letter on the site uses Hanuman —
+ * even inside English text — while Latin letters keep the system font.
+ */
+@font-face {
+  font-family: 'Hanuman Khmer';
+  src: url('/fonts/hanuman-khmer.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+1780-17FF, U+19E0-19FF, U+200C-200D, U+25CC;
+}
+
 @theme {
   --color-brand-yellow: #f8c327;
   --color-brand-yellow-dark: #e0aa0c;
   --color-brand-blue: #5792cc;
   --color-brand-blue-dark: #2f6aa6;
   --color-ink: #1f2937;
-  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans Khmer', 'Khmer OS', 'Helvetica Neue', Arial, sans-serif;
+  --font-sans: 'Hanuman Khmer', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'Hanuman Khmer', ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
 }
 
 html {
@@ -30,7 +45,7 @@ body {
 
 /* Khmer script needs a little more line height to avoid clipped vowel signs. */
 :lang(km) {
-  font-family: 'Noto Sans Khmer', 'Khmer OS', system-ui, sans-serif;
+  font-family: 'Hanuman Khmer', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   line-height: 1.7;
 }
 :lang(km) .uppercase {
