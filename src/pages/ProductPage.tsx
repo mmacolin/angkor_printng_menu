@@ -5,7 +5,7 @@ import { fetchCategories, fetchProductBySlug } from '../lib/api';
 import { usePageTitle, useSite } from '../lib/site';
 import { categoryLabel, localize, useLang } from '../lib/i18n';
 import type { Category, Product } from '../lib/types';
-import ProductImage from '../components/ProductImage';
+import Gallery from '../components/Gallery';
 import ShareDialog from '../components/ShareDialog';
 import ContactLinks from '../components/ContactLinks';
 import NotFound from './NotFound';
@@ -40,13 +40,11 @@ export default function ProductPage() {
   const { lang, t } = useLang();
   const [product, setProduct] = useState<Product | null | undefined>(undefined);
   const [category, setCategory] = useState<Category | undefined>(undefined);
-  const [activeImage, setActiveImage] = useState(0);
   const [shareOpen, setShareOpen] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
     setProduct(undefined);
-    setActiveImage(0);
     window.scrollTo(0, 0);
     Promise.all([fetchProductBySlug(slug), fetchCategories()])
       .then(([p, cats]) => {
@@ -71,13 +69,12 @@ export default function ProductPage() {
   if (product === undefined || !p) {
     return (
       <div className="mx-auto max-w-5xl animate-pulse px-4 py-6">
-        <div className="aspect-square rounded-3xl bg-slate-200 md:w-1/2" />
+        <div className="aspect-[4/3] rounded-3xl bg-slate-200 md:w-1/2" />
         <div className="mt-4 h-6 w-2/3 rounded bg-slate-200" />
       </div>
     );
   }
 
-  const images = product.images;
   const categoryName = categoryLabel(category, lang);
 
   return (
@@ -86,29 +83,9 @@ export default function ProductPage() {
         <ArrowLeft size={16} /> {t.allProducts}
       </Link>
 
-      <div className="mt-2 grid gap-6 md:grid-cols-2 md:gap-10">
+      <div className="mt-2 grid gap-6 md:grid-cols-[minmax(0,6fr)_minmax(0,5fr)] md:gap-10">
         {/* Gallery */}
-        <div>
-          <div className="aspect-square overflow-hidden rounded-3xl bg-white shadow-sm ring-1 ring-slate-200">
-            <ProductImage src={images[activeImage]} name={p.name} initialsFrom={product.name} comingSoon={t.photoComingSoon} eager />
-          </div>
-          {images.length > 1 && (
-            <div className="no-scrollbar mt-3 flex gap-2 overflow-x-auto">
-              {images.map((src, i) => (
-                <button
-                  key={src}
-                  type="button"
-                  onClick={() => setActiveImage(i)}
-                  aria-label={t.showPhoto(i + 1)}
-                  aria-current={i === activeImage}
-                  className={`focus-ring h-16 w-16 shrink-0 overflow-hidden rounded-xl ring-2 ${i === activeImage ? 'ring-brand-blue' : 'ring-transparent opacity-70'}`}
-                >
-                  <ProductImage src={src} name={`${p.name} ${i + 1}`} />
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
+        <Gallery images={product.images} name={p.name} initialsFrom={product.name} />
 
         {/* Details */}
         <div className="space-y-6">

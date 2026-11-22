@@ -74,7 +74,7 @@ export default function ImageUploader({
       >
         {uploading > 0 ? <Loader2 className="animate-spin text-brand-blue" size={28} /> : <ImagePlus className="text-brand-blue" size={28} />}
         <p className="mt-2 text-sm font-semibold text-ink">{uploading > 0 ? `Uploading ${uploading} photo${uploading > 1 ? 's' : ''}…` : 'Drag photos here or tap to choose'}</p>
-        <p className="mt-0.5 text-xs text-slate-500">JPG, PNG or WebP · up to 5 MB each · square photos look best</p>
+        <p className="mt-0.5 text-xs text-slate-500">JPG, PNG or WebP · up to 5 MB each · landscape photos (4:3) look best</p>
         <input
           ref={inputRef}
           type="file"
@@ -89,9 +89,9 @@ export default function ImageUploader({
       </div>
 
       {images.length > 0 && (
-        <ul className="mt-3 grid grid-cols-3 gap-2 sm:grid-cols-4">
+        <ul className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3">
           {images.map((src, i) => (
-            <li key={src} className="group relative aspect-square overflow-hidden rounded-xl bg-slate-100 ring-1 ring-slate-200">
+            <li key={src} className="group relative aspect-[4/3] overflow-hidden rounded-xl bg-slate-100 ring-1 ring-slate-200">
               <img src={src} alt={`Photo ${i + 1}`} className="h-full w-full object-cover" />
               {i === 0 && (
                 <span className="absolute left-1.5 top-1.5 inline-flex items-center gap-1 rounded-full bg-brand-yellow px-2 py-0.5 text-[10px] font-bold text-ink">

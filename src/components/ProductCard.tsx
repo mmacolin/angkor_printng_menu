@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Share2 } from 'lucide-react';
+import { Images, Share2 } from 'lucide-react';
 import { useSite } from '../lib/site';
 import { localize, useLang } from '../lib/i18n';
 import type { Product } from '../lib/types';
@@ -26,7 +26,7 @@ export default function ProductCard({
   return (
     <article className="group relative flex flex-col overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200 transition hover:shadow-md">
       <Link to={linkTo(`/p/${product.slug}`)} className="focus-ring flex flex-1 flex-col rounded-2xl">
-        <div className="relative aspect-square overflow-hidden">
+        <div className="relative aspect-[4/3] overflow-hidden bg-slate-100">
           <ProductImage
             src={product.images[0]}
             name={p.name}
@@ -35,6 +35,11 @@ export default function ProductCard({
             eager={eager}
             className="transition duration-300 group-hover:scale-[1.03]"
           />
+          {product.images.length > 1 && (
+            <span className="absolute bottom-2 right-2 inline-flex items-center gap-1 rounded-full bg-black/60 px-2 py-0.5 text-[11px] font-medium text-white">
+              <Images size={12} aria-hidden /> {t.photoCount(product.images.length)}
+            </span>
+          )}
           {!product.in_stock && (
             <span className="absolute left-2 top-2 rounded-full bg-slate-900/80 px-2 py-0.5 text-[11px] font-semibold text-white">{t.unavailable}</span>
           )}
