@@ -119,6 +119,8 @@ Without a `.env` file the site runs in **demo mode** with 12 placeholder product
 
 Go to `/admin`, sign in, click **Add product**. Drag photos in, fill in the **English** tab, then the **ខ្មែរ Khmer** tab, and save. The first photo is the cover.
 
+**Photos:** use **landscape photos, ideally 4:3** (e.g. 1200 × 900 px), JPG or WebP, under 5 MB. Catalogue cards and the product page show photos in 4:3, so other shapes are trimmed at the edges there; the full-screen viewer (tap a photo) always shows the whole photo. Keep important details — like a product code printed on the photo — away from the edges.
+
 - **Available** off → shows “Currently unavailable”.
 - **Visible** off → hidden from the catalogue (good for seasonal items).
 - **Delete** removes the product and its photos permanently; links already shared to it stop working.

@@ -138,7 +138,7 @@ export default function ProductsTab({ notify, notifyError }: Props) {
                   <tr key={p.id} className={p.is_published ? '' : 'bg-slate-50/60 text-slate-400'}>
                     <td className="px-4 py-2.5">
                       <div className="flex items-center gap-3">
-                        <div className="h-11 w-11 shrink-0 overflow-hidden rounded-lg">
+                        <div className="aspect-[4/3] w-14 shrink-0 overflow-hidden rounded-lg">
                           <ProductImage src={p.images[0]} name={p.name} />
                         </div>
                         <span className="min-w-0">
@@ -180,7 +180,7 @@ export default function ProductsTab({ notify, notifyError }: Props) {
             {filtered.map((p) => (
               <li key={p.id} className="rounded-2xl bg-white p-3 ring-1 ring-slate-200">
                 <div className="flex items-center gap-3">
-                  <div className="h-14 w-14 shrink-0 overflow-hidden rounded-xl">
+                  <div className="aspect-[4/3] w-[4.5rem] shrink-0 overflow-hidden rounded-xl">
                     <ProductImage src={p.images[0]} name={p.name} />
                   </div>
                   <div className="min-w-0 flex-1">
